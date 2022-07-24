@@ -54,10 +54,10 @@ let userSchema = new mongoose.Schema({
         default: "dp.png",
 
     }, 
-    // days: {
-    //     type: String,
-    //     enum: ["Mon", "Tue", "Wed"]
-    // },
+    otp: {
+        type: String
+    },
+   
     address: {
         type: String,
     }
