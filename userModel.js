@@ -57,6 +57,9 @@ let userSchema = new mongoose.Schema({
     otp: {
         type: String
     },
+    otpExpiry: {
+        type: Date
+    },
     address: {
         type: String,
     }
@@ -75,6 +78,5 @@ const FooduserModel = mongoose.model
     // name of the collection, the set of rules this collection should follow
     ('FooduserModel', userSchema);
 module.exports = FooduserModel;
-
 
 //mongodb+srv://mukeshdani:mukeshdani@md.lebil5p.mongodb.net/?retryWrites=true&w=majority
