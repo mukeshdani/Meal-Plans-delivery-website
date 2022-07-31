@@ -1,4 +1,3 @@
-
 //tech knowledge  
 // (schema) -> set of features and rules a certain entity should 
 // follow
@@ -6,7 +5,8 @@
 // connect to my app // mongoose 
 const mongoose = require('mongoose'); //npm i mongoose
 // db server link -> mongodb atlas ka link
-let dblink ="mongodb+srv://mukeshdani:mukeshdani@md.lebil5p.mongodb.net/?retryWrites=true&w=majority";
+let dblink =
+    "mongodb+srv://mukeshdani:mukeshdani@md.lebil5p.mongodb.net/?retryWrites=true&w=majority";
 // db  server connect -> mongodbAtlas connect 
 mongoose
     .connect(dblink)
@@ -33,7 +33,7 @@ let userSchema = new mongoose.Schema({
         validate: {
             validator: function () {
                 // this referes to the current entry 
-                    return this.password==this.confirmPassword;
+                return this.password == this.confirmPassword;
             },
             //    error message
             message: "password miss match"
@@ -47,17 +47,16 @@ let userSchema = new mongoose.Schema({
     phonenumber: {
         type: String,
         minLength: [10, "less then 10 numbers"],
-        maxLength: [10,"more then 10 numbers"]
+        maxLength: [10, "more then 10 numbers"]
     },
     pic: {
         type: String,
         default: "dp.png",
 
-    }, 
+    },
     otp: {
         type: String
     },
-   
     address: {
         type: String,
     }
@@ -74,10 +73,8 @@ let userSchema = new mongoose.Schema({
 // model is similar to your collection 
 const FooduserModel = mongoose.model
     // name of the collection, the set of rules this collection should follow
-('FooduserModel', userSchema);
+    ('FooduserModel', userSchema);
 module.exports = FooduserModel;
-
-
 
 
 //mongodb+srv://mukeshdani:mukeshdani@md.lebil5p.mongodb.net/?retryWrites=true&w=majority
