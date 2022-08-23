@@ -1,72 +1,112 @@
-import React, { useState } from 'react';
-import '../Styles/profile.css';
-import { useAuth } from '../Context/AuthProvider';
 import axios from 'axios';
-
-function Profile() {
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
+import '../Styles/planDetail.css';
+import '../Styles/contact.css';
+import AuthProvider, { useAuth } from '../Context/AuthProvider';
+function PlanDetail() {
+    const [plan, setplan] = useState({})
+    const { id } = useParams();
+    const [arr, setarr] = useState();
+    const [review, setreview] = useState("");
+    const [rate, setrate] = useState();
     const { user } = useAuth();
-    const [password, passwordSet] = useState(user.user.password)
-    const [passwordCnf, passwordCnfSet] = useState(user.user.password)
-    const [email, emailSet] = useState(user.user.email);
-    const [name, nameSet] = useState(user.user.name);
-    const nameEdit = async () => {
-        await axios.patch('/api/users/login');
+    useEffect(async () => {
+        const data = await axios.get(`/api/v1/plan/${id}`)
+        console.log(data.data.data);
+        delete data.data.data["_id"]
+        delete data.data.data["__v"]
+        setplan(data.data.data)
+        const reviews = await axios.get("/api/getReview/" + id);
+        setarr(reviews.data.reviews)
+        console.log(arr);
+    }, [])
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
     const handleClick = async () => {
+        console.log(123645);
+        const data = await axios.post("/api/reviews", {
+            "review": review,
+            "rating": rate,
+            "user": user.user._id,
+            "plan": id
+        })
+        const reviews = await axios.get("/api/getReview/" + id);
+        setarr(reviews.data.reviews);
+    }
+    const handleDelete = async () => {
         try {
-            console.log(user.user._id);
-            const data = await axios.patch("/api/users/" + user.user._id,
-             { headers: { "Authorization": `Bearer ${user.token}` } }, {
-                email,
-                name,
-                password,
-                confirmPassword: passwordCnf,
-                role: user.user.role,
-                _id:user.user._id
+            let data = await axios.delete("/", {
+                "id": id
             });
-        } catch (error) {
-            console.log(error);
+            alert(data);
+        }
+        catch (err) {
+            alert(err);
         }
     }
-    console.log(user);
-    return (
-        <div className="container-grey">
 
-            <div className="form-container">
-                <div className='h1Box'>
-                    <h1 className='h1'>Profile</h1>\
-                    <div className="line"></div>
-                    <div className="profileImage">
-                        <img src={user.user.profileImage} />
+    return (
+        <div className="pDetailBox">
+            <div className='h1Box'>
+                <h1 className='h1'>PLAN DETAILS</h1>
+                <div className="line"></div>
+            </div>
+            <div className="planDetailBox">
+                <div className='planDetail'>
+                    <div className="loginBox">
+                        {
+                            Object.keys(plan).map((ele, key) => (
+                                <div className='entryBox' key={key}>
+                                    <div className="entryText">{capitalizeFirstLetter(ele)}</div>
+                                    <div className=" input">{capitalizeFirstLetter(plan[ele].toString())}</div>
+                                </div>
+                            ))
+                        }
                     </div>
                 </div>
-                <div className="loginBox">
-                    <div className="entryBox">
-                        <input type="file" />
-                    </div>
-                    <div className="entryBox">
-                        <div className="entryText">Email</div>
-                        <input className="email input" type="email" value={email} onChange={(e) => emailSet(e.target.value)} />
-                    </div>
-                    <div className="entryBox">
-                        <div className="entryText">Password</div>
-                        <input className="password input" type="text" value={password} onChange={(e) => passwordSet(e.target.value)} />
-                    </div>
-                    <div className="entryBox">
-                        <div className="entryText">Confirm Password</div>
-                        <input className="password input" type="text" value={passwordCnf} onChange={(e) => passwordCnfSet(e.target.value)} />
-                    </div>
-                    <div className="entryBox">
-                        <div className="entryText">Name</div>
-                        <input className="password input" type="text" value={name} onChange={(e) => nameSet(e.target.value)} />
-                    </div>
-                    <button className="loginBtn  form-button" type="submit" onClick={handleClick}>
-                        Update Profile
+            </div>
+            <div className='reviewBox'>
+                <div className="reviewEnrty">
+                    <input type="text" value={review} onChange={(e) => setreview(e.target.value)} />
+                    <select name="" id="" className="select" onChange={(e) => { setrate(e.target.value) }}>
+                        <option value="5">5 Exellent</option>
+                        <option value="4">4 Very Good</option>
+                        <option value="3">3 Good</option>
+                        <option value="2">2 Poor</option>
+                        <option value="1">1 Very Poor</option>
+                    </select>
+                    <button className="btn" onClick={handleClick}>
+                        Submit
                     </button>
                 </div>
+                {
+                    arr && arr?.map((ele, key) => (
+                        <div className="reviewsCard" key={key}>
+                            <div className="pdreviews">
+                                <div className="pdrdetail">
+                                    <h3>{ele.user.name}</h3>
+                                    <div className="input"> {ele.review}</div>
+                                </div>
+                                <div className='rate'>
+                                    {
+                                        <label htmlFor="star5" title="text">{ele.rating}</label>
+
+                                    }
+                                </div>
+                            </div>
+                            <div className='rcBtn'>
+                                <button className="showMoreBtn btn" onClick={handleDelete}>Delete</button>
+                            </div>
+                        </div>
+                    ))
+                }
+
             </div>
         </div>
     )
 }
 
-export default Profile
+export default PlanDetail
