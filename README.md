@@ -3,7 +3,9 @@
 
 
 ## Technology 👇
--Java Language
+-React.js 
+-Express.js
+
 
 -Git Hub 
  ## Platform 👇
