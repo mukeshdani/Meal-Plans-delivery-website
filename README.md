@@ -11,7 +11,7 @@
  ## Platform 👇
 
 
--[Frontend -> Ntlify](https://app.netlify.com/)
+-[Frontend -> Netlify](https://app.netlify.com/)
 
 -[Backend -> Heroku](https://nados.pepcoding.com/)
 
