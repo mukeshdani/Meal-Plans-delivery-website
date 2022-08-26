@@ -74,3 +74,6 @@
 
 ## SignUp
 <img align="center" alt="GIF" src="./images/SignUp.png" width="100%" height="320" />
+
+## Forget Password
+<img align="center" alt="GIF" src="./images/F.png" width="100%" height="320" />
