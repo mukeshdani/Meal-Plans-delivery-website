@@ -61,3 +61,16 @@
     * Database server : MongoDB Atlas 
 * Futher improvement : videos, feedback ,meal level  
 
+## Home Page 
+
+<img align="center" alt="GIF" src="./images/Home%20Page.png" width="100%" height="320" />
+
+
+## Plans
+<img align="center" alt="GIF" src="./images/Plans.png" width="100%" height="320" />
+
+## Login
+<img align="center" alt="GIF" src="./images/Login.png" width="100%" height="320" />
+
+## SignUp
+<img align="center" alt="GIF" src="./images/SignUp.png" width="100%" height="320" />
