@@ -43,7 +43,7 @@ function Footer() {
                 </div>
 
                 <p className="footer-p">
-                    Copyright © 2019 EVERYONE. All rights reserved.
+                    Copyright © 2022 EVERYONE. All rights reserved.
                 </p>
             </footer>
         </div>
